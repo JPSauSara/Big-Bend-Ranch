@@ -6,15 +6,56 @@
 
 In this activity, you'll be creating an Amazon-like storefront with the MySQL skills you learned this week. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
 
-Make sure you save and require the MySQL and Prompt npm packages in your homework files--your app will need them for data input and storage.
+Make sure you save and require the `mysql` and `inquirer` npm packages in your homework files--your app will need them for data input and storage.
 
 ### Submission Guide
 
-Make sure you use the normal GitHub process. This time, though, you need to include screenshots and/or a video showing us that you got the app working with no bugs. You can include these screenshots or a link to a video in a `README.md` file.
+Make sure you use the normal GitHub process. This time, though, you need to include a `README.md` file that describes what your application does and how to use it. Feel free to include screenshots, although they are not required.
 
 If you haven't written a markdown file yet, [click here for a rundown](https://guides.github.com/features/mastering-markdown/), or just take a look at the raw file of these instructions.
 
 #### Instructions
+
+### Initial Setup
+
+1. Create a `.gitignore` file and add the following lines to it:
+
+  ```
+  node_modules
+  .DS_Store
+  config.js
+  ```
+
+  ---
+
+  **IMPORTANT: Be sure to add `config.js` to your `.gitignore` file. Otherwise, anyone can see your database password on GitHub!**
+
+  ---
+
+2. Create a JavaScript file named `config.js`. Inside this file, export a MySQL configuration object as shown below:
+
+  ```JavaScript
+  module.exports = {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'Bamazon'
+  };
+  ```
+
+3. Replace the `password` value in your configuration object with the password of your `root` MySQL user. (This should be the password you use to connect to your MySQL server in the MySQL Workbench. This password is empty by default, unless you specified a different one during the MySQL installation process.)
+
+- - -
+
+In each of the challenges below, use the configuration object defined in `config.js` to establish a connection to your MySQL database, e.g.:
+
+```JavaScript
+var config = require('./config.js');
+var dbConnection = mysql.createConnection(config);
+```
+
+- - -
 
 ### Challenge #1: Customer View (Minimum Requirement)
 
@@ -36,14 +77,14 @@ If you haven't written a markdown file yet, [click here for a rundown](https://g
 
 4. Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
 
-5. Then create a Node application called `bamazonCustomer.js`. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
+5. Then create a Node application called `bamazonCustomer.js` that uses the configuration defined in `config.js` to connect to your `Bamazon` database. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
 
 6. The app should then prompt users with two messages.
 
    * The first should ask them the ID of the product they would like to buy.
    * The second message should ask how many units of the product they would like to buy.
 
-7. Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
+7. Y  our application should check if your store has enough of the product to meet the customer's request.
 
    * If not, the app should log a phrase like `Insufficient quantity!`, and then prevent the order from going through.
 
@@ -59,7 +100,7 @@ If you haven't written a markdown file yet, [click here for a rundown](https://g
 
 ### Challenge #2: Manager View (Next Level)
 
-* Create a new Node application called `bamazonManager.js`. Running this application will:
+* Create a new Node application called `bamazonManager.js` that uses the configuration defined in `config.js` to connect to your `Bamazon` database. Running this application will:
 
   * List a set of menu options:
 
@@ -101,7 +142,7 @@ If you haven't written a markdown file yet, [click here for a rundown](https://g
    * Add the revenue from each transaction to the `total_sales` column for the related department.
    * Make sure your app still updates the inventory listed in the `products` column.
 
-4. Create another Node app called `bamazonSupervisor.js`. Running this application will list a set of menu options:
+4. Create another Node app called `bamazonSupervisor.js` that uses the configuration defined in `config.js` to connect to your `Bamazon` database. Running this application will list a set of menu options:
 
    * View Product Sales by Department
    * Create New Department
